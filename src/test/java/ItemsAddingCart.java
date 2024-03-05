@@ -2,19 +2,32 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class ItemsAddingCart {
     public static void main(String[] args) throws InterruptedException {
 
 // TODO Auto-generated method stub
         WebDriver driver=new ChromeDriver();
+        //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        WebDriverWait W= new WebDriverWait(driver,Duration.ofSeconds(5));
         String[] itemsNeeded= {"Cucumber","Brocolli","Beetroot"};
         driver.get("https://rahulshettyacademy.com/seleniumPractise/");
         Thread.sleep(3000);
         addItems(driver,itemsNeeded);
+        driver.findElement(By.xpath("//img[@alt='Cart']")).click();
+        driver.findElement(By.xpath("//button[text()='PROCEED TO CHECKOUT']")).click();
+        W.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@placeholder='Enter promo code']")));
+        driver.findElement(By.xpath("//input[@placeholder='Enter promo code']")).sendKeys("rahulshettyacademy");
+        driver.findElement(By.xpath("//button[@class='promoBtn']")).click();
+        W.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class='promoInfo']")));
+        System.out.println(driver.findElement(By.xpath("//span[@class='promoInfo']")).getText());
     }
     public static  void addItems(WebDriver driver,String[] itemsNeeded)
     {
@@ -50,4 +63,6 @@ public class ItemsAddingCart {
             }
 
         }
-}}
+}
+
+}
