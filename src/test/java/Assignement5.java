@@ -13,6 +13,7 @@ public class Assignement5 {
         driver.findElement(By.xpath("//a[text()='Nested Frames']")).click();
         List<WebElement> iframesize = driver.findElements(By.tagName("frame"));
         System.out.println(iframesize.size());
+        //for frames we can use either id, name, index[]
         driver.switchTo().frame("frame-top");
         driver.switchTo().frame("frame-middle");
         System.out.print(driver.findElement(By.xpath("//div[@id='content']")).getText());
